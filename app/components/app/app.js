@@ -7,20 +7,32 @@ class App extends React.Component {
     constructor() {
         super();
         // Setting up initial state
-        this.state = {
-            data: []
-        }
+        this.state = { data: [] };
     }
 
 // calling the componentDidMount() method after a component is rendered for the first time
     componentDidMount() {
-        var component = this;
-        axios.get(this.props.source)
-            .then(function(event) {
+        const component = this;
+        const baseURL = 'https://localhost:8443';
+        const tokenURL = baseURL + '/rest/session/token';
+        const req = axios.get(tokenURL, {
+            withCredentials: true
+        });
+        req.then((response) => {
+            const token = response.data;
+            this.ajax = axios.create({
+                baseURL,
+                withCredentials: true,
+                headers: {
+                    'X-CSRF-Token': token,
+                },
+            });
+            this.ajax.get('/api/articles?_format=json').then(function(event) {
                 component.setState({
                     data: event.data
                 });
             })
+        });
     }
 
     render() {
@@ -50,7 +62,7 @@ class App extends React.Component {
 }
 // rendering into the DOM
 ReactDOM.render(
-   <App source="https://localhost:8443/articlesexport?_format=json" />,
+   <App  />,
     document.getElementById('app')
 );
 
