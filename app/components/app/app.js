@@ -1,9 +1,9 @@
-import  React from 'react';
+import  React , {Component} from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './app.css';
 
-class App extends React.Component {
+class App extends Component {
     constructor() {
         super();
         // Setting up initial state
@@ -13,7 +13,7 @@ class App extends React.Component {
 // calling the componentDidMount() method after a component is rendered for the first time
     componentDidMount() {
         const component = this;
-        const baseURL = 'https://localhost:8443';
+        const baseURL = this.props.source;
         const tokenURL = baseURL + '/rest/session/token';
         const req = axios.get(tokenURL, {
             withCredentials: true
@@ -27,9 +27,9 @@ class App extends React.Component {
                     'X-CSRF-Token': token,
                 },
             });
-            this.ajax.get('/api/articles?_format=json').then(function(event) {
+            this.ajax.get('/api/articles?_format=json').then(function(articles) {
                 component.setState({
-                    data: event.data
+                    data: articles.data
                 });
             })
         });
@@ -62,7 +62,7 @@ class App extends React.Component {
 }
 // rendering into the DOM
 ReactDOM.render(
-   <App  />,
+   <App source="https://localhost:8443" />,
     document.getElementById('app')
 );
 
