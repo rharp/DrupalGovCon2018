@@ -5,16 +5,14 @@ module.exports = {
     module: {
         rules: [
             {
-                // "test" is commonly used to match the file extension
-                test: /\.js$/,
-
-                // "exclude" should be used to exclude exceptions
-                exclude: [
-                    "/node_modules/"
-                ],
-
-                // the "loader"
-                loader: "babel-loader" // or "babel" because webpack adds the '-loader' automatically
+                test: /\.js?$/,
+                exclude: "/node_modules/",
+                loader: 'babel-loader'
+            },
+            {
+                test: /\.css?$/,
+                exclude: "/node_modules/",
+                use: ['style-loader','css-loader']
             }
         ]
     },
