@@ -27,10 +27,10 @@
     "type": "git",
     "url": "git+https://github.com/rharp/DrupalGovCon2018.git"
   },
-  "author": "",
+  "author": "Rick Harp",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/rharp/DrupalGovCon2018/issues"
   },
-  "homepage": "https://github.com/rharp/DrupalGovCon2018#readme"
+  "homepage": "https://www.mobomo.com/"
 }
