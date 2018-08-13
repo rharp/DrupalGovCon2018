@@ -62,7 +62,7 @@ class App extends Component {
 }
 // rendering into the DOM
 ReactDOM.render(
-   <App source="https://localhost:8443" />,
+   <App source="http://18.188.24.108" />,
     document.getElementById('app')
 );
 
