@@ -1,13 +1,18 @@
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const folder = 'app';
 
 module.exports = {
-    entry: __dirname + '/app/index.js',
+    context: __dirname,
+    entry: './' + folder + '/index.js',
     module: {
         rules: [
             {
                 test: /\.js?$/,
                 exclude: "/node_modules/",
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+                query: {
+                    presets: ['react']
+                }
             },
             {
                 test: /\.css?$/,
@@ -21,7 +26,7 @@ module.exports = {
         path: __dirname + '/build'
     },
     plugins: [new HtmlWebpackPlugin({
-        template: __dirname + '/app/index.html'
+        template: './' + folder + '/index.html'
     })],
     devServer: {
         port: 3000
