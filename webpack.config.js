@@ -1,9 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const folder = 'app';
+const folder = 'v1';
 
 module.exports = {
     context: __dirname,
-    entry: './' + folder + '/index.js',
+    entry: './apps/' + folder + '/index.js',
     module: {
         rules: [
             {
@@ -26,7 +26,7 @@ module.exports = {
         path: __dirname + '/build'
     },
     plugins: [new HtmlWebpackPlugin({
-        template: './' + folder + '/index.html'
+        template: './apps/' + folder + '/index.html'
     })],
     devServer: {
         port: 3000
