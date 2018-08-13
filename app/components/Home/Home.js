@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import ArticleTeaser from "../ArticleTeaser/ArticleTeaser";
 import axios from "axios";
+import './home.css';
 
 class Home extends React.Component {
     constructor() {
