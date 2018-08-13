@@ -11,7 +11,7 @@ class Home extends React.Component {
     }
     componentDidMount() {
         const component = this;
-        const baseURL = 'https://localhost:8443';
+        const baseURL = 'http://18.188.24.108';
         const tokenURL = baseURL + '/rest/session/token';
         const req = axios.get(tokenURL, {
             withCredentials: true
