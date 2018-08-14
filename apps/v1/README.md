@@ -2,6 +2,7 @@
 In this version we have created a basic React application as a starting point to begin your project.
 
 ##How is this created?
+
 ### 1. Install React and ReactDom
      npm install --save react react-dom
    * react: gives us access to all the react functionality including things such as JSX which is xml style syntax inside of js. 
