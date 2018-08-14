@@ -1,7 +1,6 @@
 import React from 'react';
 import ArticleTeaser from "../ArticleTeaser/ArticleTeaser";
 import axios from "axios";
-import './home.css';
 
 class Home extends React.Component {
     constructor() {
@@ -13,14 +12,11 @@ class Home extends React.Component {
         const component = this;
         const baseURL = 'http://18.188.24.108';
         const tokenURL = baseURL + '/rest/session/token';
-        const req = axios.get(tokenURL, {
-            withCredentials: true
-        });
+        const req = axios.get(tokenURL);
         req.then((response) => {
             const token = response.data;
             this.ajax = axios.create({
                 baseURL,
-                withCredentials: true,
                 headers: {
                     'X-CSRF-Token': token,
                 },

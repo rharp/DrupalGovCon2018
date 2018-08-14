@@ -11,17 +11,17 @@ class Article extends React.Component {
         const component = this;
         const baseURL = 'http://18.188.24.108';
         const tokenURL = baseURL + '/rest/session/token';
-        const req = axios.get(tokenURL, {
-            withCredentials: true
+        const req = axios.get(tokenURL,{
+            withCredentials: true,
         });
         req.then((response) => {
             const token = response.data;
             this.ajax = axios.create({
                 baseURL,
-                withCredentials: true,
                 headers: {
                     'X-CSRF-Token': token,
                 },
+                withCredentials: true,
             });
             this.ajax.get(`/node/${this.props.match.params.nid}?_format=json`).then(function(article) {
                 console.log(article);
