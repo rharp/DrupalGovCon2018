@@ -1,7 +1,7 @@
 # Version 1
 In this version we have created a basic React application as a starting point to begin your project.
 
-##How is this created?
+## How is this created?
 
 ### 1. Install React and ReactDom
      npm install --save react react-dom
