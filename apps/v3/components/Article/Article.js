@@ -21,7 +21,6 @@ class Article extends React.Component {
                 },
             });
             this.ajax.get(`/node/${this.props.match.params.nid}?_format=json`).then(function(article) {
-                console.log(article);
                 component.setState({
                     article: {
                         title: article.data.title[0].value,
