@@ -14,7 +14,6 @@ ArticleTeaser.defaultProps = {
     title: '',
     content: '',
     image: {},
-    nid: '',
 };
 
 ArticleTeaser.propTypes = {
