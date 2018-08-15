@@ -3,16 +3,27 @@ In this version we have created a basic React application as a starting point to
 
 ## How Was This Version Created?
 
-### 1. Install React and ReactDom
+### 1. Lets set up our Environment
+Since we will be using npm, we need to initialize our npm project. To do this we will use the terminal to navigate to the root directory of the folder we would like to use for our application Then run `npm init`. You will be prompted with a list of options to fill out relevant to your application, but none of the option will matter for what we are doing. 
+
+
+### 2. Install React and ReactDom
 Before we get started we need to install some base packages with npm to create the react application 
+
+**Note:** These commands will need to be run in the root directory.
 
      npm install --save react react-dom
 
    * **React:** gives us access to all the react functionality including things such as JSX which is xml style syntax inside of js. 
    * **React-dom:** Used with react applications to create Virtual Dom which it makes changes against to avoid multiple queries against the actual DOM. Compares changes vs what the Virtual dom originally got from the dom then updates the dom based on that.
 
-### 2. Create index.html
-This will act as the markup the page will display by default. We are including bootstrap css for some base styling.
+### 3. Setup our file structure
+From here, we are going to create the file structure for our application. First we will create an `apps` folder then inside of apps another folder named `v1`. This is where we will putting 
+
+### 4. Create index.html
+This file will be created inside of the `apps` directory. All of our versions will be using this file and it will not change.
+ 
+The file will act as the markup that the page will display by default. We are including bootstrap css for some base styling.
 
 **Note:** The div with the id of "app" will be targeted later to render the application inside of.
 
@@ -28,8 +39,10 @@ This will act as the markup the page will display by default. We are including b
         </body>
     </html>
     
- ### 3. Create App.js
- This is a basic React component. 
+### 5. Create App.js
+We will be adding this file inside of our `/apps/v1` folder.
+
+ This will acts as a basic React component. 
  
  Each React component requires returned markup from the render function. We will also need to use ReactDOM to render our component App with the `<App />` tag inside of the app div we created in `index.html`. 
  
@@ -50,7 +63,9 @@ This will act as the markup the page will display by default. We are including b
      
      ReactDOM.render(<App />, document.getElementById('app'));
     
- ### 4. Install More Node Modules
+### 6. Install More Node Modules
+**Note:** These commands will need to be run in the root directory.
+
  We are going to need some more libraries to enable us to build our application.
  
  #### Babel
@@ -70,19 +85,22 @@ This will act as the markup the page will display by default. We are including b
           npm install --save-dev webpack webpack-dev-server html-webpack-plugin webpack-cli 
    
 
- ### 5. Create  webpack.config.js
- Now that we have added all the required packages, we need to configure webpack so it knows what to do! 
+### 7. Create  webpack.config.js
+We will create this file in the root directory.
+
+ Now that we have added all the required packages, we need to configure webpack so it knows what to do!
+ 
  
  Here we will define the `version` folder we would like to build from to start with, if ever you would like to build from a different version folder this is where you will change it.
  
- The `entry` point will be the base component file we will be building from. In this case we will always point it to the `App.js` file we created earlier.
+ The `entry` point will be the base component file we will be building from. In this case we will always point it to `App.js`.
  
  From here we will pass the javascript and any css files through a series of transformations. 
-We are going to be including any javascript not in node_modules and passing it through babel. Then any css not in node_modules then passing it through style-loader and css-loader.
+We are going to be including any javascript not in node_modules and passing it through babel. Then any css not in node_modules then passing it through style-loader and css-loader. The files it will be transforming will be any file included in our components.
 
-After all the transformations have been made, we will create or update the folder `build/` and compile it all in the `transformed.js` file.
+After all the transformations have been made, webpack will create or update the folder `build` and compile everything into `build/transformed.js`.
 
- The HtmlWebpackPlugin will be used to set the template for the markup which will be generated to include all of our javascript in `/build` . We are going to pass our original `index.html` we created.
+ The HtmlWebpackPlugin will be used to set the template for the markup which will be generated to include all of our javascript in the `build` directory. We are going to pass our original `index.html` we created.
  
  Finally, we are going to set the port for the dev server to `3000`
  
@@ -121,21 +139,23 @@ After all the transformations have been made, we will create or update the folde
          }
      };
      
- ### 6. Add NPM scripts to package.json
- One thing we can do with npm is create some custom scripts. This will make our build process slightly easier. Inside the `package.json`which is generated by node, we will add this code snippet to the bottom of the file.
+### 8. Add NPM scripts to package.json
+ One thing we can do with npm is create some custom scripts. This will make our build process slightly easier. Inside the `package.json` which exists in the root directory, we will add this code snippet to the bottom of the file.
  
      "scripts": {
          "build": "webpack",
          "start": "webpack-dev-server"
      },
      
-### 7. Build your environment
+### 9. Build your environment
 Now that the scripts have been added we can type in these commands to generate the application.
+
+**Note:** These commands will need to be run in the root directory.
 
      npm run build
      npm run start
      
-### 8. View your App!
+### 10. View your App!
 Now is the moment you've been waiting for. You have a working React Application!
 
 go to http://localhost:3000/
