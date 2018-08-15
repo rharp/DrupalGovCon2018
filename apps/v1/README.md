@@ -90,10 +90,7 @@ We will create this file in the root directory.
 
  Now that we have added all the required packages, we need to configure webpack so it knows what to do!
  
- 
  Here we will define the `version` folder we would like to build from to start with, if ever you would like to build from a different version folder this is where you will change it.
- 
- The `entry` point will be the base component file we will be building from. In this case we will always point it to `App.js`.
  
  From here we will pass the javascript and any css files through a series of transformations. 
 We are going to be including any javascript not in node_modules and passing it through babel. Then any css not in node_modules then passing it through style-loader and css-loader. The files it will be transforming will be any file included in our components.
@@ -105,11 +102,9 @@ After all the transformations have been made, webpack will create or update the 
  Finally, we are going to set the port for the dev server to `3000`
  
      const HtmlWebpackPlugin = require('html-webpack-plugin');
-     const version = 'v1';
      
      module.exports = {
          context: __dirname,
-         entry: './apps/' + version + '/App.js',
          module: {
              rules: [
                  {
@@ -143,17 +138,19 @@ After all the transformations have been made, webpack will create or update the 
  One thing we can do with npm is create some custom scripts. This will make our build process slightly easier. Inside the `package.json` which exists in the root directory, we will add this code snippet to the bottom of the file.
  
      "scripts": {
-         "build": "webpack",
-         "start": "webpack-dev-server"
+         "build": "webpack ./apps/v1/App.js && webpack-dev-server ./apps/v1/App.js",
+         "buildv2": "webpack ./apps/v2/App.js && webpack-dev-server ./apps/v2/App.js",
+         "buildv3": "webpack ./apps/v3/App.js && webpack-dev-server ./apps/v3/App.js",
+         "buildv4": "webpack ./apps/v4/App.js && webpack-dev-server ./apps/v4/App.js"
      },
      
+Here we are defining entry points for webpack and webpack-dev-server to build on this will always point to `App.js` for the corresponding version. We will create a script for each of the versions in this training.
 ### 9. Build your environment
 Now that the scripts have been added we can type in these commands to generate the application.
 
 **Note:** These commands will need to be run in the root directory.
 
      npm run build
-     npm run start
      
 ### 10. View your App!
 Now is the moment you've been waiting for. You have a working React Application!

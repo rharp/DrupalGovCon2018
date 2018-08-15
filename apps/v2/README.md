@@ -6,8 +6,11 @@ In this Version, we have configured Drupal 8 to expose our content and accept co
 ### 1. Enable Core Modules
 In Drupal, we will need to enable the required core modules to gain access to the api.
  We will do this by
+ 
+ **Note:** The following paths are based on the a drupal instance for training at http://18.188.24.108. This will need to be changed to point to your drupal instance.
+
  * logging in as an administrator 
- *  going to ```/admin/modules``` 
+ *  going to `http://18.188.24.108/admin/modules`
  * Enable the Modules in Web Services
     * HAL
     * HTTP Basic Authentication
@@ -16,7 +19,7 @@ In Drupal, we will need to enable the required core modules to gain access to th
 
 ### 2. Create REST Service
  For this step, we will need to create a view inside of Drupal to expose the content we would like to display in our application.
- *  go to ```/admin/structure/views/add```
+ *  go to `http://18.188.24.108/admin/structure/views/add`
  *  For our example we will enter the following
     *   View name : ``Articles API``
     *   View Settings -> type : ``Article``
@@ -47,6 +50,8 @@ In Drupal, we will need to enable the required core modules to gain access to th
  ## How Was This Version Created
 
  ### 1. Install Axios and React Router Dom
+ **Note:** These commands will need to be run in the root directory.
+ 
     npm install --save axios react-router-dom
   * **Axios:** allows us to make our http requests from react to interact with our drupal api.
   * **React Router Dom:** allows for us to link to other components
@@ -173,6 +178,8 @@ In Drupal, we will need to enable the required core modules to gain access to th
     export default App
     
 ### 5. Build your environment
+**Note:** These commands will need to be run in the root directory.
+
      npm run build
      npm run start
      
