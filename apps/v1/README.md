@@ -1,18 +1,18 @@
 # Version 1
-In this version we have created a basic React application as a starting point to begin your project. Make sure you have the [Prerequisites](../../README.md) before continuing with this step.
+In this version, we have created a basic React application as a starting point to begin your project. Make sure you have the [prerequisites](../../README.md) before continuing with this step.
 
 ## How Was This Version Created?
 
 ### 1. Install React and ReactDom
-Before we get started we need to install some base packages with npm to create the react application 
+Before we get started, we need to install some base packages with npm to create the React application. 
 
      npm install --save react react-dom
 
-   * **React:** gives us access to all the react functionality including things such as JSX which is xml style syntax inside of js. 
-   * **React-dom:** Used with react applications to create Virtual Dom which it makes changes against to avoid multiple queries against the actual DOM. Compares changes vs what the Virtual dom originally got from the dom then updates the dom based on that.
+   * **React:** Gives us access to all the React functionality including JSX. JSX is XML style syntax inside of JS. 
+   * **React-dom:** Used with React applications, it creates and then changes Virtual DOM to avoid multiple queries against the actual DOM. It also compares changes against what the Virtual DOM originally replicated from the DOM; it then updates the DOM based on these comparisons.
 
 ### 2. Create index.html
-This will act as the markup the page will display by default. We are including bootstrap css for some base styling.
+This will act as the markup, in which the page will display by default. We are including Bootstrap CSS for some base styling.
 
 **Note:** The div with the id of "app" will be targeted later to render the application inside of.
 
@@ -51,7 +51,7 @@ This will act as the markup the page will display by default. We are including b
      ReactDOM.render(<App />, document.getElementById('app'));
      
  ### 4. Create index.js
- Here we are going to create our index javascript which points to our `App.js` file. we will need this for later.
+ We are going to create our index Javascript, which points to our `App.js` file. We will need this for later.
  
     import React from 'react';
     import ReactDOM from 'react-dom';
@@ -60,27 +60,27 @@ This will act as the markup the page will display by default. We are including b
     ReactDOM.render(<App />,document.getElementById('app'));
     
  ### 5. Install More Node Modules
- We are going to need some more libraries to enable us to build our application.
+ We are going to need some more libraries to build our application.
  
  #### Babel
-  In our case used to convert reacts JSX(xml inside of js) into a minified js file so it can be interpreted by the browser
+  In this case, it is used to convert React's JSX (XML inside of JS) into a minified version, so it can be interpreted by the browser.
         
         npm install --save-dev babel-core babel-loader babel-preset-react
     
  #### CSS Loader and Style Loader
- Similar to babel except takes all css and adds it to the transformation file.
+ Similar to Babel, it takes all CSS files and adds it to the transformation file.
  
      npm install css-loader style-loader --save-dev 
    
  #### Webpack
- * **Webpack:** using this to run the React Application through various transformations such as utilizing babel for js and css-loader for css.(similar transformations can be done with things such as less and svg’s)
- * **Webpack-dev-server:** used to spin up a small server using the webpack bundle which will listen for changes in files and react accordingly.
+ * **Webpack:** Runs the React application through various transformations, such as utilizing Babel for JS and css-loader for CSS (similar transformations can be done with CSS preprocessors and SVGs).
+ * **Webpack-dev-server:** Spins up a small server using the Webpack bundle. This will listen for changes in files and perform accordingly.
     
           npm install --save-dev webpack webpack-dev-server html-webpack-plugin webpack-cli 
    
 
- ### 6. Create  webpack.config.js
- Now that we have added all the required packages, we need to configure webpack so it knows what to do! 
+ ### 6. Create webpack.config.js
+ Now that we have added all the required packages, we need to configure Webpack so it knows what to do! 
  
  Here we will define the `version` folder we would like to build from to start with, if ever you would like to build from a different version folder this is where you will change it.
  
@@ -131,7 +131,7 @@ After all the transformations have been made, we will create or update the folde
      };
      
  ### 7. Add NPM scripts to package.json
- One thing we can do with npm is create some custom scripts. This will make our build process slightly easier. Inside the `package.json`which is generated by node, we will add this code snippet to the bottom of the file.
+ One thing we can do with npm is create custom scripts. This will make our build process slightly easier. Inside the `package.json` which is generated by node, we will add this code snippet to the bottom of the file.
  
      "scripts": {
          "build": "webpack",
@@ -139,7 +139,7 @@ After all the transformations have been made, we will create or update the folde
      },
      
 ### 8. Build your environment
-Now that the scripts have been added we can type in these commands to generate the application.
+We can run in the following commands to generate the application.
 
      npm run build
      npm run start
@@ -147,4 +147,4 @@ Now that the scripts have been added we can type in these commands to generate t
 ### 9. View your App!
 Now is the moment you've been waiting for. You have a working React Application!
 
-go to http://localhost:3000/
+Go to http://localhost:3000/.
