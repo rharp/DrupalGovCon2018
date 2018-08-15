@@ -4,33 +4,33 @@ In this Version, we have configured Drupal 8 to expose our content and accept co
 ## What Drupal Needs?
 
 ### 1. Enable Core Modules
-In Drupal, we will need to enable the required core modules to gain access to the api.
+In Drupal, we will need to enable the required core modules to gain access to the API.
  We will do this by
- * logging in as an administrator 
- *  going to ```/admin/modules``` 
- * Enable the Modules in Web Services
+ * Logging in as an administrator.
+ * Going to ```/admin/modules```.
+ * Enabling the Modules in Web Services.
     * HAL
     * HTTP Basic Authentication
     * Restful web services
     * Serialization
 
 ### 2. Create REST Service
- For this step, we will need to create a view inside of Drupal to expose the content we would like to display in our application.
- *  go to ```/admin/structure/views/add```
- *  For our example we will enter the following
-    *   View name : ``Articles API``
-    *   View Settings -> type : ``Article``
+ For this step, we will need to create a View inside of Drupal to expose the content we would like to display in our application.
+ *  Go to ```/admin/structure/views/add```.
+ *  For our example, we will enter the following information:
+    *   View Name : ``Articles API``
+    *   View Settings -> Type : ``Article``
     *   REST Export Settings
         *  Enable ``Provide a REST export``
-        *   REST export path: ``api/articles``
+        *   REST Export Path: ``api/articles``
      *  Save
      
  ### 3. Add CORS Configuration
- **Note:** These changes will only need to be added if our drupal instance is running on a different domain than our React application.
+ **Note:** These changes only need to be added if our Drupal instance is running on a different domain than our React application.
  
- For this we will need to add some changes to our ``services.yml`` . This can be found in ``sites/default/`` . If the file does not exist, you can copy the ``default.services.yml`` over to services.yml and then add this to the bottom of the file.
+ For this, we will need to add some changes to our ``services.yml`` . This can be found in ``sites/default/`` . If the file does not exist, you can copy the ``default.services.yml`` over to services.yml and then add this to the bottom of the file.
  
- **Note:** ``allowedOrigins`` should be set to the domain you will access the api from, for security reason. For our example, we have set it to ```*``` which indicates any domain can access this api.
+ **Note:** ``allowedOrigins`` should be set to the domain you will access the API from, for security reason. For our example, we have set it to ```*``` which indicates any domain can access this API.
  
     cors.config:
         enabled: true
@@ -46,10 +46,10 @@ In Drupal, we will need to enable the required core modules to gain access to th
  
  ## How Was This Version Created
 
- ### 1. Install Axios and React Router Dom
+ ### 1. Install Axios and React Router DOM
     npm install --save axios react-router-dom
-  * **Axios:** allows us to make our http requests from react to interact with our drupal api.
-  * **React Router Dom:** allows for us to link to other components
+  * **Axios:** Allows us to make our HTTP requests from React to interact with our Drupal API.
+  * **React Router DOM:** Allows for us to link to other components.
 
  ### 2. Create Home.js
  TODO: Break this down as instructions
@@ -172,9 +172,9 @@ In Drupal, we will need to enable the required core modules to gain access to th
     
     export default App
     
-### 5. Build your environment
+### 5. Build Your Environment
      npm run build
      npm run start
      
-### 6. View your App!
+### 6. View Your App!
 go to http://localhost:3000/

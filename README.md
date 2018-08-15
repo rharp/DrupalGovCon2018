@@ -36,7 +36,7 @@
 [Version 4](/apps/v4/README.md)
 
 
-##### Building a different version
+##### Building a Different Version
 If you would like to build a different version of the application, you will need to change the `version` variable inside of `webpack.config.js` from "v1" to the version of the application you would like to build. 
 
 Then run the npm scripts 
