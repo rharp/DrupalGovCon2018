@@ -23,5 +23,3 @@ ReactDOM.render(
    <App source="http://18.188.24.108" />,
     document.getElementById('app')
 );
-
-export default App
