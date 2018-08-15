@@ -2,3 +2,4 @@ build
 .idea
 node_modules/upath
 node_modules/.cache/uglifyjs-webpack-plugin
+node_modules/webpack/
