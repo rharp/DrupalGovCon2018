@@ -3,7 +3,7 @@ const version = 'v1';
 
 module.exports = {
     context: __dirname,
-    entry: './apps/' + version + '/index.js',
+    entry: './apps/' + version + '/App.js',
     module: {
         rules: [
             {
