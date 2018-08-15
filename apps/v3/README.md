@@ -1,10 +1,10 @@
 # Version 3
-In this version we have added to the previous [Version 2](../v2/README.md) to link to each node individually and view more details.
+In this version, we have added to the previous [Version 2](../v2/README.md) to link to each node individually and view more details.
 
 ## How Was This Version Created?
 
 ### 1. Create Article.js
-First we will need to create the component for the node landing page.
+First, we will need to create the component for the node landing page.
 
 *TODO:*  Break this down as instructions
 
@@ -64,7 +64,7 @@ First we will need to create the component for the node landing page.
     export default Article;
 
 ### 2. Update Home.js
-Add nid to passed properties 
+Add nid to passed properties.
     
     {this.state.articles.map(({title, field_image, body, nid}, index) => (
          <ArticleTeaser
@@ -77,7 +77,7 @@ Add nid to passed properties
     ))}
 
 ### 3. Update ArticleTeaser.js
-We will need to add the nid property to ArticleTeaser so we can access the nid from Home.js
+We will need to add the nid property to ArticleTeaser so we can access the nid from Home.js.
     
     ArticleTeaser.defaultProps = {
        title: '',
@@ -100,11 +100,11 @@ We will need to add the nid property to ArticleTeaser so we can access the nid f
         nid: PropTypes.string.isRequired,
     };
     
- Now we will need to create a link directly to the node's content. To do this we will first need to include Link from React Router Dom.
+ Now we will need to create a link directly to the node's content. To do this, we will first need to include Link from React Router DOM.
         
         import { Link } from 'react-router-dom';
    
-  Then we can add the `<Link>` to the node page.
+  Then, we can add the `<Link>` to the node page.
   
     const ArticleTeaser = ({title, content, image, nid}) => (
         <div className="article-teaser">
@@ -116,11 +116,11 @@ We will need to add the nid property to ArticleTeaser so we can access the nid f
      );
      
 ### 4. Update App.js
-We will now need to include the Article.js
+We will now need to include the Article.js.
 
     import Article from '../Article/Article';
      
-Then add the new route for the Article component inside the render function.
+Then, add the new route for the Article component inside the render function.
 
     render() {
             return (
@@ -133,9 +133,9 @@ Then add the new route for the Article component inside the render function.
             );
         }
         
- ### 5. Build your environment
+ ### 5. Build Your Environment
       npm run build
       npm run start
       
- ### 6. View your App!
- go to http://localhost:3000/
+ ### 6. View Your App!
+ Go to http://localhost:3000/
