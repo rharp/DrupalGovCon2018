@@ -12,6 +12,16 @@
  
  To see if you currently have npm installed you can run `npm --version` in the terminal and check. If it is not currently installed you can download it at https://nodejs.org/en/
  
+ ### Get the Environment Set Up!
+ You can do this a couple different ways. 
+ * Git: If you have git installed you can clone the repository.
+ * Download and unzip the file
+ 
+ After the repository is on your computer, you will need to  navigate to the root folder in your terminal and run 
+ 
+    npm install
+    
+ This will install the packages required for the training.
  ### Versions
  We have broken this training into different version folders in the case that you are falling behind, or would like to see the steps that we took to create that version of the application.
 
