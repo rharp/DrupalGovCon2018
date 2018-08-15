@@ -160,27 +160,29 @@ In Drupal, we will need to enable the required core modules to gain access to th
  2. Create a new Article Teaser.
  2. Assign the property keys as defined in step 3 a value from our **article** state.
  
-   ```render() {
-        return (
-           <div className="container">
-              <div className="row">
-                 <div className="col-md-12" align="center">
-                    <h1 className="title">All Articles</h1>
-                        {this.state.articles.map(({title, field_image, body}, index) => (
-                           <ArticleTeaser
-                              key={index}
-                              title={title[0].value}
-                              image={field_image[0]}
-                              content={`${body[0].value.substring(0, 250)}...`}
-                           />
-                        ))}
-                 </div>
-              </div>
-           </div>
-        );
-     }```
+ ```
+ render() {
+    return (
+      <div className="container">
+         <div className="row">
+            <div className="col-md-12" align="center">
+               <h1 className="title">All Articles</h1>
+                  {this.state.articles.map(({title, field_image, body}, index) => (
+                     <ArticleTeaser
+                       key={index}
+                       title={title[0].value}
+                       image={field_image[0]}
+                       content={`${body[0].value.substring(0, 250)}...`}
+                     />
+                  ))}
+            </div>
+         </div>
+      </div>
+    );
+ }
+ ```
     
- ### 5. Update App.js
+### 5. Update App.js
  Now that we have created a directory of all the components we need. We will update `App.js` to include our new home page.
  
  Our `App.js` file is now also going to act as a router for any page we create. To do so, we first need to install React Router DOM.
