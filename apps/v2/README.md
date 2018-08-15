@@ -152,7 +152,7 @@ In Drupal, we will need to enable the required core modules to gain access to th
  
  To do this we will first need to include `ArticleTeaser.js`
  
-        import ArticleTeaser from "../ArticleTeaser/ArticleTeaser";
+        import ArticleTeaser from "./components/ArticleTeaser/ArticleTeaser";
         
  Now that we have a access to the component we can create the render function and tell it what we would like to display on the home page. 
  This will: 
@@ -199,7 +199,7 @@ In Drupal, we will need to enable the required core modules to gain access to th
         BrowserRouter as Router,
         Route,
     } from 'react-router-dom';
-    import Home from '../Home/Home';
+    import Home from './components/Home/Home';
     
     class App extends React.Component {
     
