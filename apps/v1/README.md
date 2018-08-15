@@ -82,16 +82,16 @@ This will act as the markup, in which the page will display by default. We are i
  ### 6. Create webpack.config.js
  Now that we have added all the required packages, we need to configure Webpack so it knows what to do! 
  
- Here we will define the `version` folder we would like to build from to start with, if ever you would like to build from a different version folder this is where you will change it.
+ Here we will define the `version` we would like to build our application from. If you would like to build from a different version folder, change the version variable.
  
- The `entry` point will be the base component file we will be building from. In this case we will always point it to the `index.js` file we created earlier.
+ The `entry` point will be the base component file we will be building from. In this case, we will always point it to the `index.js` file we created earlier.
  
- From here we will pass the javascript and any css files through a series of transformations. 
-We are going to be including any javascript not in node_modules and passing it through babel. Then any css not in node_modules then passing it through style-loader and css-loader.
+ From here, we will pass the Javascript and any CSS files through a series of transformations. 
+We are going to include any Javascript (not in node_modules directory) and pass it through Babel. Then, any CSS (not in node_modules directory) should be passed through style-loader and css-loader.
 
 After all the transformations have been made, we will create or update the folder `build/` and compile it all in the `transformed.js` file.
 
- The HtmlWebpackPlugin will be used to set the template for the markup which will be generated to include all of our javascript in `/build` . We are going to pass our original `index.html` we created.
+ The HtmlWebpackPlugin will be used to set the template for the markup, which will include all of our Javascript in `/build` directory. We are going to pass our original `index.html` we created.
  
  Finally, we are going to set the port for the dev server to `3000`
  
