@@ -71,7 +71,7 @@ We will be adding this file inside of our `/apps/v1` folder.
  #### Babel
   In our case used to convert reacts JSX(xml inside of js) into a minified js file so it can be interpreted by the browser
         
-        npm install --save-dev babel-core babel-loader babel-preset-react
+     npm install --save-dev babel-core babel-loader babel-preset-react
     
  #### CSS Loader and Style Loader
  Similar to babel except takes all css and adds it to the transformation file.
@@ -82,20 +82,19 @@ We will be adding this file inside of our `/apps/v1` folder.
  * **Webpack:** using this to run the React Application through various transformations such as utilizing babel for js and css-loader for css.(similar transformations can be done with things such as less and svg’s)
  * **Webpack-dev-server:** used to spin up a small server using the webpack bundle which will listen for changes in files and react accordingly.
     
-          npm install --save-dev webpack webpack-dev-server html-webpack-plugin webpack-cli 
-   
+    
+    npm install --save-dev webpack webpack-dev-server html-webpack-plugin webpack-cli 
+ 
 
 ### 7. Create  webpack.config.js
 We will create this file in the root directory.
 
  Now that we have added all the required packages, we need to configure webpack so it knows what to do!
  
- Here we will define the `version` folder we would like to build from to start with, if ever you would like to build from a different version folder this is where you will change it.
- 
- From here we will pass the javascript and any css files through a series of transformations. 
+ Here we will pass the javascript and any css files through a series of transformations. 
 We are going to be including any javascript not in node_modules and passing it through babel. Then any css not in node_modules then passing it through style-loader and css-loader. The files it will be transforming will be any file included in our components.
 
-After all the transformations have been made, webpack will create or update the folder `build` and compile everything into `build/transformed.js`.
+After all the transformations have been made, webpack will create or update the folder `build` and compile everything into `transformed.js`.
 
  The HtmlWebpackPlugin will be used to set the template for the markup which will be generated to include all of our javascript in the `build` directory. We are going to pass our original `index.html` we created.
  
