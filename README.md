@@ -37,11 +37,13 @@
 
 
 ##### Building a different version
-If you would like to build a different version of the application you will need to change the `version` variable inside of `webpack.config.js` from "v1" to the version of the application you would like to build. 
+If you would like to build a different version of the application you can use one of the defined npm scripts to specify which version.
 
-Then you will need to run the npm scripts 
+**Note:** This command will need to be run in the root directory.
 
     npm run build
-    npm run start
- 
-And view it at http://localhost:3000
+    npm run buildv2
+    npm run buildv3
+    npm run buildv4
+    
+And view the application at http://localhost:3000
