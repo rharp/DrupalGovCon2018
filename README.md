@@ -44,3 +44,4 @@ Then you will need to run the npm scripts
     npm run build
     npm run start
  
+And view it at http://localhost:3000
