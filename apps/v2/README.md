@@ -52,6 +52,8 @@ In Drupal, we will need to enable the required core modules to gain access to th
   * **React Router Dom:** allows for us to link to other components
 
  ### 2. Create Home.js
+ TODO: Break this down as instructions
+ 
     import React from 'react';
     import ArticleTeaser from "../ArticleTeaser/ArticleTeaser";
     import axios from "axios";
@@ -107,6 +109,8 @@ In Drupal, we will need to enable the required core modules to gain access to th
     export default Home;
  
  ### 3. Create ArticleTeaser.js
+ TODO: Break this down as instructions
+ 
     import React from 'react';
     import PropTypes from 'prop-types';
     
@@ -138,6 +142,8 @@ In Drupal, we will need to enable the required core modules to gain access to th
     export default ArticleTeaser;
  
  ### 4. Update App.js
+ TODO: Break this down as instructions
+ 
     import React from 'react';
     import ReactDOM from 'react-dom';
     import {
