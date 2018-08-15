@@ -3,3 +3,4 @@ build
 node_modules/upath
 node_modules/.cache/uglifyjs-webpack-plugin
 node_modules/webpack/
+node_modules/webpack-dev-server/
