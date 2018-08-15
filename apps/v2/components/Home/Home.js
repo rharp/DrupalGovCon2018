@@ -34,13 +34,12 @@ class Home extends React.Component {
                 <div className="row">
                     <div className="col-md-12" align="center">
                         <h1 className="title">All Articles</h1>
-                        {this.state.articles.map(({title, field_image, body, nid}, index) => (
+                        {this.state.articles.map(({title, field_image, body}, index) => (
                             <ArticleTeaser
                                 key={index}
                                 title={title[0].value}
                                 image={field_image[0]}
                                 content={`${body[0].value.substring(0, 250)}...`}
-                                nid={nid[0].value}
                             />
                         ))}
                     </div>
