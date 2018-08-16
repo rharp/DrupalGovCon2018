@@ -27,13 +27,13 @@
 
 ##### Version Documentation
 
-[Version 1](/apps/base/README.md)
+[Version 1](/apps/Base/README.md)
 
 [Version 2](/apps/Checkpoint1/README.md)
 
 [Version 3](/apps/Checkpoint2/README.md)
 
-[Version 4](/apps/Checkpoint3/README.md)
+[Version 4](/apps/Final/README.md)
 
 ##### Building a Different Version
 If you would like to build a different version of the application, you can use one of the defined npm scripts to specify which version.

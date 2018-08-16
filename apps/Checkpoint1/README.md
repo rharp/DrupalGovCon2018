@@ -1,5 +1,5 @@
 # Version 2
-In this Version, we have configured Drupal 8 to expose our content and accept connections from our application. We will be using [Version 1](../base/README.md) as a base.
+In this Version, we have configured Drupal 8 to expose our content and accept connections from our application. We will be using [Version 1](../Base/README.md) as a base.
 
 ## What Drupal Needs?
 

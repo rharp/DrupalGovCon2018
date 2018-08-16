@@ -22,10 +22,10 @@
     "webpack-dev-server": "^3.1.5"
   },
   "scripts": {
-    "build": "webpack ./apps/base/App.js && webpack-dev-server ./apps/base/App.js",
-    "build1": "webpack ./apps/Checkpoint1/App.js && webpack-dev-server ./apps/Checkpoint1/App.js",
-    "build2": "webpack ./apps/Checkpoint2/App.js && webpack-dev-server ./apps/Checkpoint2/App.js",
-    "build3": "webpack ./apps/Checkpoint3/App.js && webpack-dev-server ./apps/Checkpoint3/App.js"
+    "base": "webpack ./apps/base/App.js && webpack-dev-server ./apps/base/App.js",
+    "cp1": "webpack ./apps/Checkpoint1/App.js && webpack-dev-server ./apps/Checkpoint1/App.js",
+    "cp2": "webpack ./apps/Checkpoint2/App.js && webpack-dev-server ./apps/Checkpoint2/App.js",
+    "final": "webpack ./apps/Final/App.js && webpack-dev-server ./apps/Final/App.js"
   },
   "repository": {
     "type": "git",
