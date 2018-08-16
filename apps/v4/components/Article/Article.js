@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from "axios";
+import Comment from '../Comment/Comment'
 
 class Article extends React.Component {
     constructor() {
@@ -7,11 +8,51 @@ class Article extends React.Component {
         // Setting up initial state
         this.state = {
             article: {},
-            comment: {},
-            user: {},
+            comments: [],
+            comment: '',
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+
     componentDidMount() {
+        this.getComments();
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const baseURL = 'http://18.188.24.108';
+        const tokenURL = baseURL + '/rest/session/token';
+        const tokenReq = axios.get(tokenURL);
+        tokenReq.then((response) => {
+            this.ajax = axios.create({
+                baseURL,
+                headers: {
+                    'X-CSRF-Token': response.data,
+                },
+            })
+            this.ajax.post(`/entity/comment`, {
+                "entity_id":[{"target_id":3}],
+                "entity_type":[{"value":"node"}],
+                "comment_type":[{"target_id":"comment"}],
+                "field_name":[{"value":"field_comment"}],
+                "subject":[{"value":`${this.state.comment.substring(0, 15)}`}],
+                "comment_body":[
+                    {"value":`${this.state.comment}`}
+                ]
+            });
+        }).then(()=> {
+            this.getComments();
+        });
+
+    }
+
+    handleChange(event) {
+        this.setState({comment: event.target.value});
+    }
+
+    getComments(){
         const component = this;
         const baseURL = 'http://18.188.24.108';
         const tokenURL = baseURL + '/rest/session/token';
@@ -23,46 +64,26 @@ class Article extends React.Component {
                 headers: {
                     'X-CSRF-Token': token,
                 },
-                withCredentials: true
             })
-            this.ajax.post( baseURL + `/user/login?_format=json`, {
-                "name": "user",
-                "pass": "password"
-            }).catch (function (error) {
-                console.log(error);
-            }).then(function (){
-                component.ajax.get(`/node/${component.props.match.params.nid}?_format=json`).then(function(article) {
-                    component.setState({
-                        article: {
-                            title: article.data.title[0].value,
-                            body: article.data.body[0].value,
-                            imageURL: article.data.field_image[0].url,
-                            date: article.data.field_date[0].value,
-                            cid: article.data.field_comment[0].cid,
-                            commentUid:  article.data.field_comment[0].last_comment_uid
-                        },
-                    });
-                }).then(function() {
-                    component.ajax.get(`/comment/${ component.state.article.cid }?_format=json`).then(function(comment) {
-                        component.setState({
-                            comment: {
-                                subject: comment.data.subject[0].value,
-                                body: comment.data.comment_body[0].value,
-                                created: comment.data.created[0].value
-                            },
-                        });
-                    });
-                    component.ajax.get(`/user/${ component.state.article.commentUid }?_format=json`).then(function(user) {
-                        component.setState({
-                            user: {
-                                name: user.data.name[0].value
-                            },
-                        });
-                    })
-                })
+            this.ajax.get(`/node/${this.props.match.params.nid}?_format=json`).then(function(article) {
+                component.setState({
+                    article: {
+                        title: article.data.title[0].value,
+                        body: article.data.body[0].value,
+                        imageURL: article.data.field_image[0].url,
+                        date: article.data.field_date[0].value,
+                    },
+                });
+
             })
-        });
+            this.ajax.get(`/api/comments/${this.props.match.params.nid}?_format=json`).then(function(comments) {
+                component.setState({
+                    comments: comments.data
+                });
+            });
+        })
     }
+
     render() {
         return (
             <article className="article">
@@ -73,14 +94,31 @@ class Article extends React.Component {
                             <h1>{this.state.article.title}</h1>
                             <div>{this.state.article.date}</div>
                             {this.state.article.body}
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="article-comment">
-                                        <p className="article-comment__body">{this.state.comment.body}</p>
-                                        <p className="article-comment__user-name">{this.state.user.name}</p>
-                                    </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12" align="center">
+                            {this.state.comments.map(({subject, comment_body}) => (
+                                <Comment
+                                    title={subject[0].value}
+                                    content={comment_body[0].value}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12" align="center">
+                            <form onSubmit={this.handleSubmit} >
+                                <div className="col-md-2">
+                                    <label>Comment:</label>
                                 </div>
-                            </div>
+                                <div className="col-md-8">
+                                    <textarea id="comment" value={this.state.value} onChange={this.handleChange} />
+                                </div>
+                                <div className="col-md-2">
+                                    <input type="submit" value="Submit" />
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
