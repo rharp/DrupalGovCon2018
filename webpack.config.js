@@ -1,9 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const version = 'v1';
 
 module.exports = {
     context: __dirname,
-    entry: './apps/' + version + '/index.js',
     module: {
         rules: [
             {
