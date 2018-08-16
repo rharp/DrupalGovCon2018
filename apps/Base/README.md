@@ -1,157 +1,239 @@
-# Version 1
-In this version, we have created a basic React application as a starting point to begin your project. Make sure you have the [Prerequisites](../../README.md) before continuing with this step.
+# Starting with the Base application
+We created a basic, working, React application in [Building the Base application](../README.md). 
 
-## How Was This Version Created?
+Now, we will walk through the steps for configuring Drupal 8 to expose our content and accept connections from our application. Then we will create a Home page in our React application which will display all of the content relating to our Articles content type from Drupal. 
 
-### 1. Lets set up our Environment
-Since we will be using npm, we need to initialize our npm project. To do this we will use the terminal to navigate to the root directory of the folder we would like to use for our application Then run `npm init`. You will be prompted with a list of options to fill out relevant to your application, but none of the option will matter for what we are doing. 
+## What Drupal Needs
 
-
-### 2. Install React and ReactDom
-Before we get started we need to install some base packages with npm to create the react application 
-
-**Note:** These commands will need to be run in the root directory.
-
-     npm install --save react react-dom
-
-   * **React:** gives us access to all the react functionality including things such as JSX which is xml style syntax inside of js. 
-   * **React-dom:** Used with react applications to create Virtual Dom which it makes changes against to avoid multiple queries against the actual DOM. Compares changes vs what the Virtual dom originally got from the dom then updates the dom based on that.
-
-### 3. Setup our file structure
-From here, we are going to create the file structure for our application. First we will create an `apps` folder then inside of apps another folder named `v1`. This is where we will putting 
-
-### 4. Create index.html
-This file will be created inside of the `apps` directory. All of our versions will be using this file and it will not change.
+### 1. Enable Core Modules
+In Drupal, we will need to enable the required core modules to gain access to the API.
  
-The file will act as the markup that the page will display by default. We are including bootstrap css for some base styling.
+ **Note:** The following paths are based on the a Drupal instance for training at http://18.188.24.108. This will need to be changed to point to your Drupal instance.
 
-**Note:** The div with the id of "app" will be targeted later to render the application inside of.
+ * Log in as an administrator.
+ * Go to `http://18.188.24.108/admin/modules`.
+ * Enable the following modules in Web Services:
+    * HAL
+    * HTTP Basic Authentication
+    * Restful web services
+    * Serialization
 
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <title>Drupal GovCon 2018</title>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        </head>
-        <body>
-            <div id="app"></div>
-        </body>
-    </html>
-    
-### 5. Create App.js
-We will be adding this file inside of our `/apps/v1` folder.
-
- This will acts as a basic React component. 
- 
- Each React component requires returned markup from the render function. We will also need to use ReactDOM to render our component App with the `<App />` tag inside of the app div we created in `index.html`. 
- 
- In this case, we will return some basic markup to display "Hello World". 
- 
-     import React from 'react';
-     import ReactDOM from 'react-dom';
+### 2. Create Articles REST Service
+ For this step, we will need to create a View inside of Drupal to expose the content we would like to display in our application.
+ *  Go to `http://18.188.24.108/admin/structure/views/add`.
+ *  For our example, we will enter the following: 
+    *   View Name : ``Articles API``
+    *   View Settings -> type : ``Article``
+    *   REST Export Settings
+        *  Enable ``Provide a REST export``
+        *   REST export path: ``api/articles``
+     *  Save
      
-     class App extends React.Component {
-         render() {
-             return (
-                 <div className="container">
-                     <h1>Hello World!</h1>
-                 </div>
-             );
-         }
-     }
-     
-     ReactDOM.render(<App />, document.getElementById('app'));
-    
-### 6. Install More Node Modules
-**Note:** These commands will need to be run in the root directory.
-
- We are going to need some more libraries to enable us to build our application.
+ ### 3. Add CORS Configuration
+ **Note:** These changes will only need to be added if our Drupal instance is running on a different domain than our React application.
  
- #### Babel
-  In our case used to convert reacts JSX(xml inside of js) into a minified js file so it can be interpreted by the browser
+ For this, we will need to add some changes to our ``services.yml``. This can be found in ``sites/default/``. If the file does not exist, you can copy ``default.services.yml`` over to services.yml and then add this to the bottom of the file.
+ 
+ **Note:** ``allowedOrigins`` should be set to the domain you will access the API from, for security reason. For our example, we have set it to ```*``` which indicates that any domain can access this API.
+ 
+    cors.config:
+        enabled: true
+        allowedHeaders: ['x-csrf-token', 'content-type']ones.
+        allowedMethods: ['GET', 'POST', 'PATCH', 'DELETE']
+        allowedOrigins: ['*']
+        exposedHeaders: false
+        maxAge: false
+        supportsCredentials: true
         
-     npm install --save-dev babel-core babel-loader babel-preset-react
-    
- #### CSS Loader and Style Loader
- Similar to babel except takes all css and adds it to the transformation file.
  
-     npm install css-loader style-loader --save-dev 
+ #### Drupal is now configured for our application!
+ 
+ ## What Our Application Needs
+
+ ### 1. Install Axios and React Router DOM
+  * **Axios:** Allows us to make our HTTP requests from React to interact with our Drupal API.
+  * **React Router DOM:** Allows for us to link to other components.
+  
+   **Note:** These commands will need to be run in the root directory.
+  
+        npm install --save axios react-router-dom
+ 
+
+ ### 2. Create Home.js
+ We are going to need to create a landing page to display our Articles. To do this, we will need a new component. Let's start by creating a folder named `components` in the `base` directory to store all of our components we will create going forward. 
+ 
+ Then, let's create a directory specific to this component named `Home`. We can add any files related to our Home component here, such as CSS files.
+ 
+ Now let's create our script `Home.js` inside of the `Home` folder.
+ 
+  This script will do the following.
+   1. Make a request using Axios to get a session token from Drupal.
+   2. Attach the token to the header to make another request to our API we created earlier, and collect the data in JSON format.
+   3. Take the returned Articles and pass them into our **article** state defined in the constructor.
    
- #### Webpack
- * **Webpack:** using this to run the React Application through various transformations such as utilizing babel for js and css-loader for css.(similar transformations can be done with things such as less and svg’s)
- * **Webpack-dev-server:** used to spin up a small server using the webpack bundle which will listen for changes in files and react accordingly.
+ 
+    import React from 'react';
+    import axios from "axios";
     
+    class Home extends React.Component {
+        constructor() {
+            super();
+            // Setting up initial state
+            this.state = { articles: [] };
+        }
+        componentDidMount() {
+            const component = this;
+            const baseURL = 'http://18.188.24.108';
+            const tokenURL = baseURL + '/rest/session/token';
+            const req = axios.get(tokenURL);
+            req.then((response) => {
+                const token = response.data;
+                this.ajax = axios.create({
+                    baseURL,
+                    headers: {
+                        'X-CSRF-Token': token,
+                    },
+                });
+                this.ajax.get('/api/articles?_format=json').then(function(articles) {
+                    component.setState({
+                        articles: articles.data
+                    });
+                })
+            });
+        }
+    };
     
-    npm install --save-dev webpack webpack-dev-server html-webpack-plugin webpack-cli 
+    export default Home;
  
-
-### 7. Create  webpack.config.js
-We will create this file in the root directory.
-
- Now that we have added all the required packages, we need to configure webpack so it knows what to do!
+ ### 3. Create ArticleTeaser.js
+ Let's start by creating a new directory for this component named `ArticleTeaser` in the `components` folder.
  
- Here we will pass the javascript and any css files through a series of transformations. 
-We are going to be including any javascript not in node_modules and passing it through babel. Then any css not in node_modules then passing it through style-loader and css-loader. The files it will be transforming will be any file included in our components.
-
-After all the transformations have been made, webpack will create or update the folder `build` and compile everything into `transformed.js`.
-
- The HtmlWebpackPlugin will be used to set the template for the markup which will be generated to include all of our javascript in the `build` directory. We are going to pass our original `index.html` we created.
+ This will be our sub-component of the Home component. The purpose of this is to take in the data from `Home.js` and render a teaser display for each article.
  
- Finally, we are going to set the port for the dev server to `3000`
+ Now let's create our script `ArticleTeaser.js` inside of the `ArticleTeaser` folder.
  
-     const HtmlWebpackPlugin = require('html-webpack-plugin');
+ This script will do the following.
+ 
+ 1. Declare the properties we will need from our API.
+ 2. Define the types of each property.
+ 3. Create the markup we will use to display the article teaser.
+  
+  
+        import React from 'react';
+        import PropTypes from 'prop-types';
+        
+        const ArticleTeaser = ({title, content, image}) => (
+            <div className="article-teaser">
+                <img src={image.url} height={image.height} width={image.width} alt={image.alt} />
+                <h2 className="article-teaser__title">{title}</h2>
+                {content}
+            </div>
+        );
+        
+        ArticleTeaser.defaultProps = {
+            title: '',
+            content: '',
+            image: {},
+        };
+        
+        ArticleTeaser.propTypes = {
+            title: PropTypes.string.isRequired,
+            content: PropTypes.string.isRequired,
+            image: PropTypes.shape({
+                url: PropTypes.string,
+                height: PropTypes.string,
+                width: PropTypes.string,
+                alt: PropTypes.string,
+            }),
+        };
+        
+        export default ArticleTeaser;
+        
+ ### 4. Update Home.js
+ Now that we created an article teaser component, we can pass the data from our API to the component. 
+ 
+ To do this, we will first need to include `ArticleTeaser.js`
+ 
+        import ArticleTeaser from "./components/ArticleTeaser/ArticleTeaser";
+        
+ Now that we have a access to the component, we can create the render function and define what to display on the home page. 
+ This will: 
+ 1. Loop through all of the articles retrieved from our API request.
+ 2. Create a new Article Teaser.
+ 3. Assign the property keys as defined in [Step 3](#3-create-articleteaserjs) a value from our **article** state.
+ 
+ ```
+ render() {
+    return (
+      <div className="container">
+         <div className="row">
+            <div className="col-md-12" align="center">
+               <h1 className="title">All Articles</h1>
+                  {this.state.articles.map(({title, field_image, body}, index) => (
+                     <ArticleTeaser
+                       key={index}
+                       title={title[0].value}
+                       image={field_image[0]}
+                       content={`${body[0].value.substring(0, 250)}...`}
+                     />
+                  ))}
+            </div>
+         </div>
+      </div>
+    );
+ }
+ ```
+    
+### 5. Update App.js
+ Now that we have created a directory of all the components we need, we will update `App.js` to include our new home page.
+ 
+ Our `App.js` file is going to act as a router for any page we create. To do so, we first need to install React Router DOM.
+ 
+ **Note:** This command will need to be run in the root directory.
+    
+    npm install react-router-dom
+ 
+ We will then update our file to include the Home component and define our route.
+  
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import {
+        BrowserRouter as Router,
+        Route,
+    } from 'react-router-dom';
+    import Home from './components/Home/Home';
+    
+    class App extends React.Component {
+    
+        render() {
+            return (
+                <Router>
+                    <div>
+                        <Route exact path="/" component={Home} />
+                    </div>
+                </Router>
+            );
+        }
+    }
+    // rendering into the DOM
+    ReactDOM.render(<App />, document.getElementById('app'));
+    
+
+### 6. Build Your Environment
+We now have a working React application using Drupal as a backend!
+
+**Note:** This command will need to be run in the root directory.
+
+If you are manually configuring the application in the `Base` directory you will use
+
+     npm run base
      
-     module.exports = {
-         context: __dirname,
-         module: {
-             rules: [
-                 {
-                     test: /\.js?$/,
-                     exclude: "/node_modules/",
-                     loader: 'babel-loader',
-                     query: {
-                         presets: ['react']
-                     }
-                 },
-                 {
-                     test: /\.css?$/,
-                     exclude: "/node_modules/",
-                     use: ['style-loader','css-loader']
-                 }
-             ]
-         },
-         output: {
-             filename: 'transformed.js',
-             path: __dirname + '/build'
-         },
-         plugins: [new HtmlWebpackPlugin({
-             template: './apps/index.html'
-         })],
-         devServer: {
-             port: 3000
-         }
-     };
-     
-### 8. Add NPM scripts to package.json
- One thing we can do with npm is create some custom scripts. This will make our build process slightly easier. Inside the `package.json` which exists in the root directory, we will add this code snippet to the bottom of the file.
+ Otherwise you can build from our `Checkpoint1` directory which includes all of the changes we have completed so far.
  
-     "scripts": {
-         "build": "webpack ./apps/v1/App.js && webpack-dev-server ./apps/v1/App.js",
-         "buildv2": "webpack ./apps/v2/App.js && webpack-dev-server ./apps/v2/App.js",
-         "buildv3": "webpack ./apps/v3/App.js && webpack-dev-server ./apps/v3/App.js",
-         "buildv4": "webpack ./apps/v4/App.js && webpack-dev-server ./apps/v4/App.js"
-     },
-     
-Here we are defining entry points for webpack and webpack-dev-server to build on this will always point to `App.js` for the corresponding version. We will create a script for each of the versions in this training.
-### 9. Build your environment
-Now that the scripts have been added we can type in these commands to generate the application.
+      npm run cp1
+      
+### 7. View Your App!
+Go to http://localhost:3000/.
 
-**Note:** These commands will need to be run in the root directory.
 
-     npm run build
-     
-### 10. View your App!
-Now is the moment you've been waiting for. You have a working React Application!
-
-go to http://localhost:3000/
+When you are ready you can continue with [Starting from Checkpoint 1](../Checkpoint1/README.md).
