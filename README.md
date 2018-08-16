@@ -27,13 +27,13 @@
 
 ##### Version Documentation
 
-[Version 1](/apps/v1/README.md)
+[Version 1](/apps/base/README.md)
 
-[Version 2](/apps/v2/README.md)
+[Version 2](/apps/Checkpoint1/README.md)
 
-[Version 3](/apps/v3/README.md)
+[Version 3](/apps/Checkpoint2/README.md)
 
-[Version 4](/apps/v4/README.md)
+[Version 4](/apps/Checkpoint3/README.md)
 
 
 ##### Building a different version

@@ -1,5 +1,5 @@
 # Version 3
-In this version we have added to the previous [Version 2](../v2/README.md) which will link the Article Teasers and link them to the node page individually in order to view more details.
+In this version we have added to the previous [Version 2](../Checkpoint1/README.md) which will link the Article Teasers and link them to the node page individually in order to view more details.
 
 ## What Drupal Needs?
 
