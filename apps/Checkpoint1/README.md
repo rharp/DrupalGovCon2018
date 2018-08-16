@@ -4,23 +4,23 @@ In this Version, we have configured Drupal 8 to expose our content and accept co
 ## What Drupal Needs?
 
 ### 1. Enable Core Modules
-In Drupal, we will need to enable the required core modules to gain access to the api.
+In Drupal, we will need to enable the required core modules to gain access to the API.
  
- **Note:** The following paths are based on the a drupal instance for training at http://18.188.24.108. This will need to be changed to point to your drupal instance.
+ **Note:** The following paths are based on the a Drupal instance for training at http://18.188.24.108. This will need to be changed to point to your Drupal instance.
 
- * Log in as an administrator 
- * Go to `http://18.188.24.108/admin/modules`
- * Enable the Modules in Web Services
+ * Log in as an administrator.
+ * Go to `http://18.188.24.108/admin/modules`.
+ * Enable the following modules in Web Services:
     * HAL
     * HTTP Basic Authentication
     * Restful web services
     * Serialization
 
 ### 2. Create REST Service
- For this step, we will need to create a view inside of Drupal to expose the content we would like to display in our application.
- *  Go to `http://18.188.24.108/admin/structure/views/add`
- *  For our example we will enter the following
-    *   View name : ``Articles API``
+ For this step, we will need to create a View inside of Drupal to expose the content we would like to display in our application.
+ *  Go to `http://18.188.24.108/admin/structure/views/add`.
+ *  For our example, we will enter the following: 
+    *   View Name : ``Articles API``
     *   View Settings -> type : ``Article``
     *   REST Export Settings
         *  Enable ``Provide a REST export``
@@ -28,11 +28,11 @@ In Drupal, we will need to enable the required core modules to gain access to th
      *  Save
      
  ### 3. Add CORS Configuration
- **Note:** These changes will only need to be added if our drupal instance is running on a different domain than our React application.
+ **Note:** These changes will only need to be added if our Drupal instance is running on a different domain than our React application.
  
- For this we will need to add some changes to our ``services.yml`` . This can be found in ``sites/default/`` . If the file does not exist, you can copy the ``default.services.yml`` over to services.yml and then add this to the bottom of the file.
+ For this, we will need to add some changes to our ``services.yml``. This can be found in ``sites/default/``. If the file does not exist, you can copy ``default.services.yml`` over to services.yml and then add this to the bottom of the file.
  
- **Note:** ``allowedOrigins`` should be set to the domain you will access the api from, for security reason. For our example, we have set it to ```*``` which indicates any domain can access this api.
+ **Note:** ``allowedOrigins`` should be set to the domain you will access the API from, for security reason. For our example, we have set it to ```*``` which indicates that any domain can access this API.
  
     cors.config:
         enabled: true
@@ -48,9 +48,9 @@ In Drupal, we will need to enable the required core modules to gain access to th
  
  ## How Was This Version Created
 
- ### 1. Install Axios and React Router Dom
-  * **Axios:** allows us to make our http requests from react to interact with our drupal api.
-  * **React Router Dom:** allows for us to link to other components
+ ### 1. Install Axios and React Router DOM
+  * **Axios:** Allows us to make our HTTP requests from React to interact with our Drupal API.
+  * **React Router DOM:** Allows for us to link to other components.
   
    **Note:** These commands will need to be run in the root directory.
   
@@ -58,15 +58,15 @@ In Drupal, we will need to enable the required core modules to gain access to th
  
 
  ### 2. Create Home.js
- We are going to need to create a landing page to display our Articles. To do this we will need a new component. Let's start by creating a folder named `components` in the `v2` directory to store all of our components we will create going forward. 
+ We are going to need to create a landing page to display our Articles. To do this, we will need a new component. Let's start by creating a folder named `components` in the `v2` directory to store all of our components we will create going forward. 
  
- Then lets create a directory specific to this component named `Home`. We can add any files related to our Home component here, such as css files.
+ Then, let's create a directory specific to this component named `Home`. We can add any files related to our Home component here, such as CSS files.
  
  Now let's create our script `Home.js` inside of the `Home` folder.
  
   This script will do the following.
-   1. Make a request using axios to get a session token from drupal 
-   2. Attach the token to the header to make another request to our api we created earlier, and collect the data in json format.
+   1. Make a request using Axios to get a session token from Drupal.
+   2. Attach the token to the header to make another request to our API we created earlier, and collect the data in JSON format.
    3. Take the returned Articles and pass them into our **article** state defined in the constructor.
    
  
@@ -106,13 +106,13 @@ In Drupal, we will need to enable the required core modules to gain access to th
  ### 3. Create ArticleTeaser.js
  Let's start by creating a new directory for this component named `ArticleTeaser` in the `components` folder.
  
- This will be our sub-component from the Home component. The purpose of this is to take in the data from `Home.js` and render a teaser display for each article.
+ This will be our sub-component of the Home component. The purpose of this is to take in the data from `Home.js` and render a teaser display for each article.
  
  Now let's create our script `ArticleTeaser.js` inside of the `ArticleTeaser` folder.
  
  This script will do the following.
  
- 1. Declare the properties we will need from our api
+ 1. Declare the properties we will need from our API.
  2. Define the types of each property.
  3. Create the markup we will use to display the article teaser.
   
@@ -148,17 +148,17 @@ In Drupal, we will need to enable the required core modules to gain access to th
         export default ArticleTeaser;
         
  ### 4. Update Home.js
- Now that we have an article teaser component created we can pass the data from our api to the component. 
+ Now that we created an article teaser component, we can pass the data from our API to the component. 
  
- To do this we will first need to include `ArticleTeaser.js`
+ To do this, we will first need to include `ArticleTeaser.js`
  
         import ArticleTeaser from "./components/ArticleTeaser/ArticleTeaser";
         
- Now that we have a access to the component we can create the render function and tell it what we would like to display on the home page. 
+ Now that we have a access to the component, we can create the render function and define what to display on the home page. 
  This will: 
- 1. Loop through all of the articles retrieved from our api request.
+ 1. Loop through all of the articles retrieved from our API request.
  2. Create a new Article Teaser.
- 2. Assign the property keys as defined in step 3 a value from our **article** state.
+ 3. Assign the property keys as defined in [Step 3](#3-create-articleteaserjs) a value from our **article** state.
  
  ```
  render() {
@@ -183,9 +183,9 @@ In Drupal, we will need to enable the required core modules to gain access to th
  ```
     
 ### 5. Update App.js
- Now that we have created a directory of all the components we need. We will update `App.js` to include our new home page.
+ Now that we have created a directory of all the components we need, we will update `App.js` to include our new home page.
  
- Our `App.js` file is now also going to act as a router for any page we create. To do so, we first need to install React Router DOM.
+ Our `App.js` file is going to act as a router for any page we create. To do so, we first need to install React Router DOM.
  
  **Note:** This command will need to be run in the root directory.
     
@@ -217,12 +217,12 @@ In Drupal, we will need to enable the required core modules to gain access to th
     ReactDOM.render(<App />, document.getElementById('app'));
     
 
-### 6. Build your environment
+### 6. Build Your Environment
 We now have a working React application using Drupal as a backend!
 
 **Note:** This command will need to be run in the root directory.
 
      npm run buildv2
      
-### 7. View your App!
-go to http://localhost:3000/
+### 7. View Your App!
+Go to http://localhost:3000/.

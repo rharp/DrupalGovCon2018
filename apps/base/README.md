@@ -1,5 +1,5 @@
 # Version 1
-In this version we have created a basic React application as a starting point to begin your project. Make sure you have the [Prerequisites](../../README.md) before continuing with this step.
+In this version, we have created a basic React application as a starting point to begin your project. Make sure you have the [Prerequisites](../../README.md) before continuing with this step.
 
 ## How Was This Version Created?
 
