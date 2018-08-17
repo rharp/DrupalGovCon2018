@@ -126,7 +126,7 @@ This script will do the following:
                         }
                     });
                 })
-            });
+            });__
         }
         render() {
             // console.log('Article', this.state.article);

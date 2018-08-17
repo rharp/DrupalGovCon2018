@@ -33,7 +33,6 @@ class Article extends React.Component {
         });
     }
     render() {
-        // console.log('Article', this.state.article);
         return (
             <article className="article">
                 <div className="container">
