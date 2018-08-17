@@ -22,7 +22,7 @@
     "webpack-dev-server": "^3.1.5"
   },
   "scripts": {
-    "base": "webpack ./apps/base/App.js && webpack-dev-server ./apps/base/App.js",
+    "base": "webpack ./apps/Base/App.js && webpack-dev-server ./apps/Base/App.js",
     "cp1": "webpack ./apps/Checkpoint1/App.js && webpack-dev-server ./apps/Checkpoint1/App.js",
     "cp2": "webpack ./apps/Checkpoint2/App.js && webpack-dev-server ./apps/Checkpoint2/App.js",
     "final": "webpack ./apps/Final/App.js && webpack-dev-server ./apps/Final/App.js"
