@@ -106,6 +106,7 @@ After all the transformations have been made, webpack will create or update the 
      
      module.exports = {
          context: __dirname,
+         mode: 'development',
          module: {
              rules: [
                  {
