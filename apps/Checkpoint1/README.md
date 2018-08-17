@@ -129,7 +129,6 @@ This script will do the following:
             });__
         }
         render() {
-            // console.log('Article', this.state.article);
             return (
                 <article className="article">
                     <div className="container">
