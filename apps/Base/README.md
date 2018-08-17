@@ -154,7 +154,7 @@ In Drupal, we will need to enable the required core modules to gain access to th
  
  To do this, we will first need to include `ArticleTeaser.js`
  
-        import ArticleTeaser from "./components/ArticleTeaser/ArticleTeaser";
+          import ArticleTeaser from "../ArticleTeaser/ArticleTeaser";
         
  Now that we have a access to the component, we can create the render function and define what to display on the home page. 
  This will: 

@@ -20,7 +20,7 @@ Before we get started we need to install some base packages with npm to create t
    * **React-dom:** Used with react applications to create Virtual Dom which it makes changes against to avoid multiple queries against the actual DOM. Compares changes vs what the Virtual dom originally got from the dom then updates the dom based on that.
 
 ### 3. Setup our file structure
-From here, we are going to create the file structure for our application. First we will create an `apps` folder then inside of apps another folder named `Base`. This is where we will putting 
+From here, we are going to create the file structure for our application. First we will create an `apps` folder then inside of apps another folder named `Base`. This is where we will putting our application files.
 
 ### 4. Create index.html
 This file will be created inside of the `apps` directory. All of our versions will be using this file and it will not change.
