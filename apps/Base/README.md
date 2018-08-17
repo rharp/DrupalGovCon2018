@@ -38,7 +38,7 @@ In Drupal, we will need to enable the required core modules to gain access to th
  
     cors.config:
         enabled: true
-        allowedHeaders: ['x-csrf-token', 'content-type']ones.
+        allowedHeaders: ['x-csrf-token', 'content-type']
         allowedMethods: ['GET', 'POST', 'PATCH', 'DELETE']
         allowedOrigins: ['*']
         exposedHeaders: false
