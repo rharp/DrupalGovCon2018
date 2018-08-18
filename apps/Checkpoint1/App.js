@@ -19,7 +19,4 @@ class App extends React.Component {
     }
 }
 // rendering into the DOM
-ReactDOM.render(
-   <App source="http://18.188.24.108" />,
-    document.getElementById('app')
-);
+ReactDOM.render(<App />, document.getElementById('app'));
