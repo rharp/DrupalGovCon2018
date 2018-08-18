@@ -60,7 +60,7 @@ In Drupal, we will need to enable the required core modules to gain access to th
  
 
  ### 2. Create Home.js
- We are going to need to create a landing page to display our Articles. To do this, we will need a new component. Let's start by creating a folder named `components` in the `base` directory to store all of our components we will create going forward. 
+ We are going to need to create a landing page to display our Articles. To do this, we will need a new component. Let's start by creating a folder named `components` in the `Base` directory to store all of our components we will create going forward. 
  
  Then, let's create a directory specific to this component named `Home`. We can add any files related to our Home component here, such as CSS files.
  
@@ -69,37 +69,36 @@ In Drupal, we will need to enable the required core modules to gain access to th
   This script will do the following.
    1. Make a request using Axios to get a session token from Drupal.
    2. Attach the token to the header to make another request to our API we created earlier, and collect the data in JSON format.
-   3. Take the returned Articles and pass them into our **article** state defined in the constructor.
-   
+   3. Take the returned Articles and pass them into our **articles** state defined in the constructor.  
  
     import React from 'react';
     import axios from "axios";
     
     class Home extends React.Component {
         constructor() {
-            super();
-            // Setting up initial state
-            this.state = { articles: [] };
+           super();
+           this.state = { articles: [] };
         }
-        componentDidMount() {
-            const component = this;
-            const baseURL = 'http://18.188.24.108';
-            const tokenURL = baseURL + '/rest/session/token';
-            const req = axios.get(tokenURL);
-            req.then((response) => {
-                const token = response.data;
-                this.ajax = axios.create({
-                    baseURL,
-                    headers: {
-                        'X-CSRF-Token': token,
-                    },
-                });
-                this.ajax.get('/api/articles?_format=json').then(function(articles) {
-                    component.setState({
-                        articles: articles.data
-                    });
-                })
-            });
+        
+        componentWillMount(){
+           const component = this;
+           const baseURL = 'http://18.188.24.108';
+           const tokenURL = baseURL + '/rest/session/token';
+           const req = axios.get(tokenURL);
+           req.then((response) => {
+             const token = response.data;
+             this.ajax = axios.create({
+                baseURL,
+                headers: {
+                  'X-CSRF-Token': token,
+                }
+             });
+             this.ajax.get('/api/articles?_format=json').then(function(articles) {
+                 component.setState({
+                   articles: articles.data
+                 });
+             });
+           });
         }
     };
     
@@ -117,37 +116,39 @@ In Drupal, we will need to enable the required core modules to gain access to th
  1. Declare the properties we will need from our API.
  2. Define the types of each property.
  3. Create the markup we will use to display the article teaser.
+  ```
+  import React from 'react';
+  import PropTypes from 'prop-types';
   
+  const ArticleTeaser = ({title,content,image}) => {
+      return (
+          <div>
+              <img src={image.url} height={image.height} width={image.width} alt={image.alt} />
+              <h2>{title}</h2>
+              {content}
+          </div>
+      );
+  };
   
-        import React from 'react';
-        import PropTypes from 'prop-types';
-        
-        const ArticleTeaser = ({title, content, image}) => (
-            <div className="article-teaser">
-                <img src={image.url} height={image.height} width={image.width} alt={image.alt} />
-                <h2 className="article-teaser__title">{title}</h2>
-                {content}
-            </div>
-        );
-        
-        ArticleTeaser.defaultProps = {
-            title: '',
-            content: '',
-            image: {},
-        };
-        
-        ArticleTeaser.propTypes = {
-            title: PropTypes.string.isRequired,
-            content: PropTypes.string.isRequired,
-            image: PropTypes.shape({
-                url: PropTypes.string,
-                height: PropTypes.string,
-                width: PropTypes.string,
-                alt: PropTypes.string,
-            }),
-        };
-        
-        export default ArticleTeaser;
+  ArticleTeaser.defaultProps = {
+      title: '',
+      content: '',
+      image: {},
+  };
+  
+  ArticleTeaser.propTypes = {
+      title: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      image: PropTypes.shape({
+          url: PropTypes.string,
+          height: PropTypes.number,
+          width: PropTypes.number,
+          alt: PropTypes.string,
+      }),
+  };
+  
+  export default ArticleTeaser;
+```
         
  ### 4. Update Home.js
  Now that we created an article teaser component, we can pass the data from our API to the component. 
@@ -160,30 +161,24 @@ In Drupal, we will need to enable the required core modules to gain access to th
  This will: 
  1. Loop through all of the articles retrieved from our API request.
  2. Create a new Article Teaser.
- 3. Assign the property keys as defined in [Step 3](#3-create-articleteaserjs) a value from our **article** state.
- 
+ 3. Assign the property keys as defined in [Step 3](#3-create-articleteaserjs) a value from our **articles** state.
  ```
- render() {
-    return (
-      <div className="container">
-         <div className="row">
-            <div className="col-md-12" align="center">
-               <h1 className="title">All Articles</h1>
-                  {this.state.articles.map(({title, field_image, body}, index) => (
-                     <ArticleTeaser
-                       key={index}
-                       title={title[0].value}
-                       image={field_image[0]}
-                       content={`${body[0].value.substring(0, 250)}...`}
-                     />
-                  ))}
+render() {
+        return(
+            <div align="center">
+                <h1>All Articles</h1>
+                {this.state.articles.map(({title, field_image, body}, index) => (
+                    <ArticleTeaser
+                        key={index}
+                        title={title[0].value}
+                        image={field_image[0]}
+                        content={`${body[0].value.substring(0,250)}...`}
+                    />
+                ))}
             </div>
-         </div>
-      </div>
-    );
- }
- ```
-    
+        )
+    };
+``` 
 ### 5. Update App.js
  Now that we have created a directory of all the components we need, we will update `App.js` to include our new home page.
  
@@ -194,30 +189,29 @@ In Drupal, we will need to enable the required core modules to gain access to th
     npm install react-router-dom
  
  We will then update our file to include the Home component and define our route.
-  
-    import React from 'react';
-    import ReactDOM from 'react-dom';
-    import {
-        BrowserRouter as Router,
-        Route,
-    } from 'react-router-dom';
-    import Home from './components/Home/Home';
-    
-    class App extends React.Component {
-    
-        render() {
-            return (
-                <Router>
-                    <div>
-                        <Route exact path="/" component={Home} />
-                    </div>
-                </Router>
-            );
-        }
+  ```
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+} from 'react-router-dom';
+import Home from './components/Home/Home';
+
+class App extends React.Component {
+    render() {
+        return (
+            <Router>
+                <div>
+                    <Route exact path="/" component={Home} />
+                </div>
+            </Router>
+        );
     }
-    // rendering into the DOM
-    ReactDOM.render(<App />, document.getElementById('app'));
-    
+}
+// rendering into the DOM
+ReactDOM.render(<App />, document.getElementById('app'));
+```
 
 ### 6. Build Your Environment
 We now have a working React application using Drupal as a backend!
