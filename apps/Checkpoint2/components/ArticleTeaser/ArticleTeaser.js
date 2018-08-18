@@ -1,22 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import './article-teaser.css';
 
-const ArticleTeaser = ({title, content, image, nid}) => (
-    <div className="article-teaser">
-        <img src={image.url} height={image.height} width={image.width} alt={image.alt} />
-        <h2 className="article-teaser__title">{title}</h2>
-        {content}
-        <Link to={`/node/${nid}`} title={title}>Read More</Link>
-    </div>
-);
+const ArticleTeaser = ({title,content,image, nid}) => {
+    return (
+        <div>
+            <img src={image.url} height={image.height} width={image.width} alt={image.alt} />
+            <h2>{title}</h2>
+            {content}
+            <Link to={`/node/${nid}`}>Read More</Link>
+        </div>
+    );
+};
 
 ArticleTeaser.defaultProps = {
     title: '',
     content: '',
     image: {},
-    nid: '',
+    nid: ''
 };
 
 ArticleTeaser.propTypes = {
@@ -24,11 +25,11 @@ ArticleTeaser.propTypes = {
     content: PropTypes.string.isRequired,
     image: PropTypes.shape({
         url: PropTypes.string,
-        height: PropTypes.string,
-        width: PropTypes.string,
+        height: PropTypes.number,
+        width: PropTypes.number,
         alt: PropTypes.string,
     }),
-    nid: PropTypes.string.isRequired,
+    nid: PropTypes.number,
 };
 
 export default ArticleTeaser;

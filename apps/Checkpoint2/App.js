@@ -8,7 +8,6 @@ import Home from './components/Home/Home';
 import Article from './components/Article/Article';
 
 class App extends React.Component {
-
     render() {
         return (
             <Router>
