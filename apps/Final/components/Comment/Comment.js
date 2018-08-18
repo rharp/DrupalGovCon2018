@@ -1,17 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './comment.css';
 
-const Comment = ({title, content}) => (
-    <div className="row">
-        <div className="comment">
-            <div className="col-md-12">
-                <h2 className="comment__title">{title}</h2>
-                {content}
-            </div>
+const Comment = ({title,content}) => {
+    return (
+        <div >
+            <h2>{title}</h2>
+            {content}
         </div>
-    </div>
-);
+    );
+};
 
 Comment.defaultProps = {
     title: '',
