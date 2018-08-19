@@ -4,11 +4,10 @@ import axios from "axios";
 class Article extends React.Component {
     constructor() {
         super();
-        // Setting up initial state
         this.state = { article: {} };
     }
+
     componentDidMount() {
-        const component = this;
         const baseURL = 'http://18.188.24.108';
         const tokenURL = baseURL + '/rest/session/token';
         const req = axios.get(tokenURL);
@@ -20,18 +19,25 @@ class Article extends React.Component {
                     'X-CSRF-Token': token,
                 },
             });
-            this.ajax.get(`/node/${this.props.match.params.nid}?_format=json`).then(function(article) {
-                component.setState({
-                    article: {
-                        title: article.data.title[0].value,
-                        body: article.data.body[0].value,
-                        imageURL: article.data.field_image[0].url,
-                        date: article.data.field_date[0].value,
-                    }
-                });
-            })
-        });
+        }).then(() => {
+            this.getArticle();
+        })
     }
+
+    getArticle() {
+        const component = this;
+        this.ajax.get(`/node/${this.props.match.params.nid}?_format=json`).then(function(article) {
+            component.setState({
+                article: {
+                    title: article.data.title[0].value,
+                    body: article.data.body[0].value,
+                    imageURL: article.data.field_image[0].url,
+                    date: article.data.field_date[0].value,
+                }
+            });
+        })
+    }
+
     render() {
         return (
             <div className="col-md-12" align="center">
