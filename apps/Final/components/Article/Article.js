@@ -2,7 +2,6 @@ import React from 'react';
 import axios from "axios";
 import Comment from '../Comment/Comment';
 
-
 class Article extends React.Component {
     constructor() {
         super();
@@ -11,64 +10,53 @@ class Article extends React.Component {
             comments: [],
             comment: ''
         };
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentWillMount() {
-        this.getComments();
+        const baseURL = 'http://18.188.24.108';
+        const tokenURL = baseURL + '/rest/session/token';
+        const req = axios.get(tokenURL);
+        req.then((response) => {
+            const token = response.data;
+            this.ajax = axios.create({
+                baseURL,
+                headers: {
+                    'X-CSRF-Token': token,
+                },
+            });
+        }).then(() => {
+            this.getArticle();
+            this.getComments();
+        })
+    }
+
+    getArticle() {
+        const component = this;
+        this.ajax.get(`/node/${this.props.match.params.nid}?_format=json`).then(function(article) {
+            component.setState({
+                article: {
+                    title: article.data.title[0].value,
+                    body: article.data.body[0].value,
+                    imageURL: article.data.field_image[0].url,
+                    date: article.data.field_date[0].value,
+                }
+            });
+        })
     }
 
     getComments(){
         const component = this;
-        const baseURL= 'http://18.188.24.108';
-        const tokenURL = baseURL + '/rest/session/token';
-
-        const req = axios.get(tokenURL);
-        req.then((response) => {
-            const token = response.data;
-            this.ajax = axios.create({
-                baseURL,
-                headers: {
-                    'X-CSRF-Token' : token,
-                }
-            });
-            this.ajax.get(`/node/${this.props.match.params.nid}?_format=json`).then(function(article){
-                component.setState({
-                    article: {
-                        title: article.data.title[0].value,
-                        body: article.data.body[0].value,
-                        imageURL: article.data.field_image[0].url,
-                        date: article.data.field_date[0].value,
-                    }
-                })
-            });
-            this.ajax.get(`/api/comments/${this.props.match.params.nid}?_format=json`).then(function(comments){
-                component.setState({
-                    comments: comments.data
-                })
+        this.ajax.get(`/api/comments/${this.props.match.params.nid}?_format=json`).then(function(comments){
+            component.setState({
+                comments: comments.data
             })
-        });
+        })
     }
 
-    handleChange(event) {
-        this.setState({comment: event.target.value});
-    }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        const baseURL= 'http://18.188.24.108';
-        const tokenURL = baseURL + '/rest/session/token';
-        const req = axios.get(tokenURL);
-        req.then((response) => {
-            const token = response.data;
-            this.ajax = axios.create({
-                baseURL,
-                headers: {
-                    'X-CSRF-Token' : token,
-                }
-            });
+    postComment() {
+        return (
             this.ajax.post(`/entity/comment`,{
                 "entity_id" :[{"target_id": `${this.props.match.params.nid}`}],
                 "entity_type" :[{"value": "node"}],
@@ -78,10 +66,19 @@ class Article extends React.Component {
                 "comment_body": [
                     {"value": `${this.state.comment}`}
                 ]
-            }).then(()=> {
-                this.getComments();
             })
-        });
+        )
+    }
+
+    handleChange(event) {
+        this.setState({comment: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        this.postComment().then(()=> {
+            this.getComments();
+        })
     }
 
     render() {
