@@ -95,6 +95,119 @@ For this process, we will need to be able to send user comments back to Drupal. 
  
     import Comment from '../Comment/Comment'
  
- Add `comments: []` to the state.
+ Add `comments: []` to the state to capture all of our comments from the api.
  
+ Then we will go get the data from our view.
  
+ ```
+ getComments(){
+         const component = this;
+         this.ajax.get(`/api/comments/${this.props.match.params.nid}?_format=json`).then(function(comments){
+             component.setState({
+                 comments: comments.data
+             })
+         })
+     }
+   ```
+   
+ and need to call that function from `componentWillMount()` after our `getArticle()`. 
+ 
+ After that, we will render our data in the render statement, under the article data.
+ 
+ ```
+ <div align="center">
+        {this.state.comments.map(({subject, comment_body},index) => (
+               <Comment
+                    key={index}
+                    title={subject[0].value}
+                    content={comment_body[0].value}
+               />
+        ))}
+ </div>
+ ```
+ ### 3. Build Your Environment
+At this point, your application will now show and comments for the node.
+
+**Note:** This command will need to be run in the root directory.
+
+     npm run base
+     
+ View your app at http://localhost:3000
+ 
+ ### 4. Update Article.js
+ Now that we have our list of comments, let's allow for our anonymous users to post comments on the node they are viewing.
+ 
+ First, we will create the form the user will be entering their comment into. We will be creating the form under our comments section.
+ 
+ ```
+  <div align="center">
+        <form onSubmit={this.handleSubmit}>
+             <div className="col-md-2">
+                 <label>Comment:</label>
+             </div>
+             <div className="col-md-8">
+                 <textarea  value={this.state.value} onChange={this.handleChange}/>
+             </div>
+             <div className="col-md-2">
+                  <input type="submit" value="Submit"/>
+             </div>
+        </form>
+  </div>
+ ```
+ 
+ Next we will add `comment: ''` to the state to catch the users comment from the form element. Since we have our state for the comment we will create the function to post it to drupal.
+
+```
+ postComment() {
+        return (
+            this.ajax.post(`/entity/comment`,{
+                "entity_id" :[{"target_id": `${this.props.match.params.nid}`}],
+                "entity_type" :[{"value": "node"}],
+                "comment_type": [{"target_id": "comment"}],
+                "field_name": [{"value": "field_comment"}],
+                "subject" :[{"value": `${this.state.comment.substring(0,15)}`}],
+                "comment_body": [
+                    {"value": `${this.state.comment}`}
+                ]
+            })
+        )
+    }
+```
+
+From here we will need to add couple function to react to our form input. 
+
+ * `handleChange()` - this will run anytime the textarea is updated. This is how we will capture the data the user enters.
+ 
+ ```
+   handleChange(event) {
+         this.setState({comment: event.target.value});
+     }
+ ```
+ 
+* `handleSubmit()` - Now that we have the data and the request to post, we need to trigger this on submit and re-render our comments section.
+
+```
+ handleSubmit(event) {
+        event.preventDefault();
+        this.postComment().then(()=> {
+            this.getComments();
+        })
+    }
+```
+
+ ### 5. Build Your Environment
+At this point our application is fully complete! Our users can view our Home page which renders articles teasers, view the full article page, view comments, and post their own! So let's check it out.
+
+**Note:** This command will need to be run in the root directory.
+
+If you are manually configuring the application in the `Base` directory you will use
+
+     npm run base
+     
+ Otherwise you can build from our `Final` directory which includes all of the changes we have completed so far.
+ 
+      npm run final
+      
+### 7. View Your App!
+Go to http://localhost:3000/.
+
