@@ -63,163 +63,38 @@ For this process, we will need to be able to send user comments back to Drupal. 
   1. Declare the properties we will need from our API.
   2. Define the types of each property.
   3. Create the markup we will use to display the Comment.
+  
+  ```
+   import React from 'react';
+   import PropTypes from 'prop-types';
    
+   const Comment = ({title,content}) => {
+       return (
+           <div >
+               <h2>{title}</h2>
+               {content}
+           </div>
+       );
+   };
    
-         import React from 'react';
-         import PropTypes from 'prop-types';
-         
-         const Comment = ({title, content}) => (
-             <div className="row">
-                 <div className="comment">
-                     <div className="col-md-12">
-                         <h2 className="comment__title">{title}</h2>
-                         {content}
-                     </div>
-                 </div>
-             </div>
-         );
-         
-         Comment.defaultProps = {
-             title: '',
-             content: '',
-         };
-         
-         Comment.propTypes = {
-             title: PropTypes.string.isRequired,
-             content: PropTypes.string.isRequired,
-         };
-         
-         export default Comment;
+   Comment.defaultProps = {
+       title: '',
+       content: '',
+   };
+   
+   Comment.propTypes = {
+       title: PropTypes.string.isRequired,
+       content: PropTypes.string.isRequired,
+   };
+   
+   export default Comment;
+```
        
  ### 2. Update Article.js
  First we need to import the comment component
  
     import Comment from '../Comment/Comment'
  
- Add `comments: []` to the sate.
+ Add `comments: []` to the state.
  
- Add to the bottom of the `componentDidMount()` function. After our article request.
-       
-       this.ajax.get(`/api/comments/${this.props.match.params.nid}?_format=json`).then(function(comments) {
-            component.setState({
-                comments: comments.data
-            });
-        });
-        
- Add after the article data row
  
-    <div className="row">
-       <div className="col-md-12" align="center">
-           {this.state.comments.map(({subject, comment_body}) => (
-              <Comment
-                  title={subject[0].value}
-                  content={comment_body[0].value}
-              />
-           ))}
-       </div>
-    </div>
-    
- Render application to display recent comments. `npm run base`
- 
- Now lets create our form for users to create a new comment under our comments row
- 
-     <div className="row">
-        <div className="col-md-12" align="center">
-           <form onSubmit={this.handleSubmit} >
-               <div className="col-md-2">
-                 <label>Comment:</label>
-               </div>
-               <div className="col-md-8">
-                  <textarea id="comment" value={this.state.value} onChange={this.handleChange} />
-               </div>
-               <div className="col-md-2">
-                  <input type="submit" value="Submit" />
-               </div>
-            </form>
-          </div>
-      </div>
-      
-  Add `comment: ''` to state
-      
- Create functions
- 
-    handleSubmit(event) 
-    handleChange(event)
- 
- bind component to this object in constructor
-    
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    
- Add code to `handleChange(event)`
- 
-    handleChange(event) {
-        this.setState({comment: event.target.value});
-    }
- 
- Create function for rendering our comments then move all code from `componentDidMount()` and move it to `getComments()`
- 
-    getComments(){
-            const component = this;
-            const baseURL = 'http://18.188.24.108';
-            const tokenURL = baseURL + '/rest/session/token';
-            const req = axios.get(tokenURL);
-            req.then((response) => {
-                const token = response.data;
-                this.ajax = axios.create({
-                    baseURL,
-                    headers: {
-                        'X-CSRF-Token': token,
-                    },
-                })
-                this.ajax.get(`/node/${this.props.match.params.nid}?_format=json`).then(function(article) {
-                    component.setState({
-                        article: {
-                            title: article.data.title[0].value,
-                            body: article.data.body[0].value,
-                            imageURL: article.data.field_image[0].url,
-                            date: article.data.field_date[0].value,
-                        },
-                    });
-    
-                })
-                this.ajax.get(`/api/comments/${this.props.match.params.nid}?_format=json`).then(function(comments) {
-                    component.setState({
-                        comments: comments.data
-                    });
-                });
-            })
-        }
-
-Add `this.getcomments();` into the now empty `componentsDidMount();`
- 
-
- write code in handle submit
- 
-    handleSubmit(event) {
-            event.preventDefault();
-            const baseURL = 'http://18.188.24.108';
-            const tokenURL = baseURL + '/rest/session/token';
-            const tokenReq = axios.get(tokenURL);
-            tokenReq.then((response) => {
-                this.ajax = axios.create({
-                    baseURL,
-                    headers: {
-                        'X-CSRF-Token': response.data,
-                    },
-                })
-                this.ajax.post(`/entity/comment`, {
-                    "entity_id":[{"target_id":3}],
-                    "entity_type":[{"value":"node"}],
-                    "comment_type":[{"target_id":"comment"}],
-                    "field_name":[{"value":"field_comment"}],
-                    "subject":[{"value":`${this.state.comment.substring(0, 15)}`}],
-                    "comment_body":[
-                        {"value":`${this.state.comment}`}
-                    ]
-                });
-            }).then(()=> {
-                this.getComments();
-            });
-    
-        }

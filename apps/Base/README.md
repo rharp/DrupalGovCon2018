@@ -117,37 +117,35 @@ In Drupal, we will need to enable the required core modules to gain access to th
  2. Define the types of each property.
  3. Create the markup we will use to display the article teaser.
   ```
-  import React from 'react';
-  import PropTypes from 'prop-types';
-  
-  const ArticleTeaser = ({title,content,image}) => {
-      return (
-          <div>
-              <img src={image.url} height={image.height} width={image.width} alt={image.alt} />
-              <h2>{title}</h2>
-              {content}
-          </div>
-      );
-  };
-  
-  ArticleTeaser.defaultProps = {
-      title: '',
-      content: '',
-      image: {},
-  };
-  
-  ArticleTeaser.propTypes = {
-      title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-      image: PropTypes.shape({
-          url: PropTypes.string,
-          height: PropTypes.number,
-          width: PropTypes.number,
-          alt: PropTypes.string,
-      }),
-  };
-  
-  export default ArticleTeaser;
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const ArticleTeaser = ({title,content,image}) => {
+    return (
+        <div>
+            <img src={image.url} alt={image.alt} />
+            <h2>{title}</h2>
+            {content}
+        </div>
+    );
+};
+
+ArticleTeaser.defaultProps = {
+    title: '',
+    content: '',
+    image: {},
+};
+
+ArticleTeaser.propTypes = {
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    image: PropTypes.shape({
+        url: PropTypes.string,
+        alt: PropTypes.string,
+    }),
+};
+
+export default ArticleTeaser;
 ```
         
  ### 4. Update Home.js
@@ -163,7 +161,7 @@ In Drupal, we will need to enable the required core modules to gain access to th
  2. Create a new Article Teaser.
  3. Assign the property keys as defined in [Step 3](#3-create-articleteaserjs) a value from our **articles** state.
  ```
-render() {
+ render() {
         return(
             <div align="center">
                 <h1>All Articles</h1>
