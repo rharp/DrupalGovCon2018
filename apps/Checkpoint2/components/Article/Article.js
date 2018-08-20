@@ -40,11 +40,13 @@ class Article extends React.Component {
 
     render() {
         return (
-            <div className="col-md-12" align="center">
-                <img src={this.state.article.imageURL} />
-                <h1>{this.state.article.title}</h1>
-                <div>{this.state.article.date}</div>
-                {this.state.article.body}
+            <div>
+                <div align="center">
+                    <img src={this.state.article.imageURL} />
+                    <h1>{this.state.article.title}</h1>
+                    <div>{this.state.article.date}</div>
+                    {this.state.article.body}
+                </div>
             </div>
         );
     }
