@@ -8,7 +8,7 @@ After we have the list of comments, we are going to create a form in React. This
 ## What Drupal Needs
 ### 1. Create Comments REST Service
  For this step, we will need to create a View inside of Drupal to expose the comments for all nodes. 
- *  Go to `http://18.188.24.108/admin/structure/views/add`.
+ *  Go to `https://headless.mobomo.net/admin/structure/views/add`.
  *  For our example, we will enter the following: 
     *   View Name : ``Comments API``
     *   View Settings 
@@ -38,9 +38,9 @@ After we have the list of comments, we are going to create a form in React. This
 For this process, we will need to be able to send user comments back to Drupal. To do this we will use our contributed module RestUI.
 
 
- **Note:** The following paths are based on the a Drupal instance for training at http://18.188.24.108. This will need to be changed to point to your Drupal instance.
+ **Note:** The following paths are based on the a Drupal instance for training at https://headless.mobomo.net. This will need to be changed to point to your Drupal instance.
 
-* Go to `http://18.188.24.108/admin/config/services/rest`.
+* Go to `https://headless.mobomo.net/admin/config/services/rest`.
 * Enable the `Comment` Resource (this will bring you to the configuration page).
     *  For our example we will use the following settings:
         *   Granularity : ``Resource``

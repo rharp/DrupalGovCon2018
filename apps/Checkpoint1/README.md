@@ -11,9 +11,9 @@ Now, we will configure Drupal to give us each individual node, using a contribut
 ### 2. Configure RestUI
 For this process, we will need to be able to access each node's content individually. Here we will configure RestUI to allow for this.
 
- **Note:** The following paths are based on the a Drupal instance for training at http://18.188.24.108. This will need to be changed to point to your Drupal instance.
+ **Note:** The following paths are based on the a Drupal instance for training at https://headless.mobomo.net. This will need to be changed to point to your Drupal instance.
 
-* Go to `http://18.188.24.108/admin/config/services/rest`.
+* Go to `https://headless.mobomo.net/admin/config/services/rest`.
 * Enable the `Content` Resource (this will bring you to the configuration page).
     *  For our example we will use the following settings:
         *   Granularity : ``Resource``
@@ -104,7 +104,7 @@ class Article extends React.Component {
     }
 
     componentDidMount() {
-        const baseURL = 'http://18.188.24.108';
+        const baseURL = 'https://headless.mobomo.net';
         const tokenURL = baseURL + '/rest/session/token';
         const req = axios.get(tokenURL);
         req.then((response) => {

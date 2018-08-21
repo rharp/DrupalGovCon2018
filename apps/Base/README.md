@@ -8,10 +8,10 @@ Now, we will walk through the steps for configuring Drupal 8 to expose our conte
 ### 1. Enable Core Modules
 In Drupal, we will need to enable the required core modules to gain access to the API.
  
- **Note:** The following paths are based on the a Drupal instance for training at http://18.188.24.108. This will need to be changed to point to your Drupal instance.
+ **Note:** The following paths are based on the a Drupal instance for training at https://headless.mobomo.net. This will need to be changed to point to your Drupal instance.
 
  * Log in as an administrator.
- * Go to `http://18.188.24.108/admin/modules`.
+ * Go to `https://headless.mobomo.net/admin/modules`.
  * Enable the following modules in Web Services:
     * HAL
     * HTTP Basic Authentication
@@ -20,7 +20,7 @@ In Drupal, we will need to enable the required core modules to gain access to th
 
 ### 2. Create Articles REST Service
  For this step, we will need to create a View inside of Drupal to expose the content we would like to display in our application.
- *  Go to `http://18.188.24.108/admin/structure/views/add`.
+ *  Go to `https://headless.mobomo.net/admin/structure/views/add`.
  *  For our example, we will enter the following: 
     *   View Name : ``Articles API``
     *   View Settings -> type : ``Article``
@@ -82,7 +82,7 @@ In Drupal, we will need to enable the required core modules to gain access to th
         
         componentWillMount(){
            const component = this;
-           const baseURL = 'http://18.188.24.108';
+           const baseURL = 'https://headless.mobomo.net';
            const tokenURL = baseURL + '/rest/session/token';
            const req = axios.get(tokenURL);
            req.then((response) => {

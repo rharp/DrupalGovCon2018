@@ -10,7 +10,7 @@ class Home extends React.Component {
 
     componentWillMount(){
         const component = this;
-        const baseURL = 'http://18.188.24.108';
+        const baseURL = 'https://headless.mobomo.net';
         const tokenURL = baseURL + '/rest/session/token';
         const req = axios.get(tokenURL);
         req.then((response) => {
