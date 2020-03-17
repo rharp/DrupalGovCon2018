@@ -1,8 +1,3 @@
 build
 .idea
-node_modules/upath
-node_modules/.cache/uglifyjs-webpack-plugin
-node_modules/webpack/
-node_modules/webpack-dev-server/
-node_modules/.bin/webpack
-node_modules/.bin/webpack-dev-server
+node_modules/
